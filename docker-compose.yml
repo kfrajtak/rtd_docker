@@ -1,0 +1,59 @@
+version: "2"
+services:
+  db:
+    image: sameersbn/postgresql:9.1-1
+    environment:
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+      - DB_NAME=${DB_NAME}
+    volumes:
+      - postgresql-data-volume:/var/lib/postgresql
+
+  readthedocs:
+    build: .
+    ports:
+      - "8000:8000"
+    links:
+      - db
+      - elasticsearch
+      - redis
+    volumes:
+      - ./user_builds:/app/user_builds
+    environment:
+      - DJANGO_SECRET_KEY=lmrffsgfhrilklg
+      - DB_ENV_DB_NAME=${DB_NAME}
+      - DB_ENV_DB_USER=${DB_USER}
+      - DB_ENV_DB_PASS=${DB_PASS}
+
+  elasticsearch:
+    image: jfroche/elasticsearch
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./es:/var/lib/elasticsearch
+
+  redis:
+    image: redis
+
+  gitea:
+    image: gitea/gitea:latest
+    volumes:
+      - ./data:/data
+    ports:
+      - "3900:3000"
+      - "2922:22"
+    restart: always
+
+  giteadb:
+    image: mariadb:10
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=gitea
+      - MYSQL_DATABASE=gitea
+      - MYSQL_USER=gitea
+      - MYSQL_PASSWORD=gitea
+    volumes:
+      - ./db/:/var/lib/mysql
+
+volumes:
+  postgresql-data-volume:
