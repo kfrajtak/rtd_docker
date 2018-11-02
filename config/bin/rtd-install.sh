@@ -4,9 +4,7 @@ cd $APPDIR
 set -e
 
 unzip /tmp/master.zip -d /tmp >/dev/null 2>/dev/null 
-ls -al /tmp
-mv /tmp/readthedocs.org-master/* /tmp/readthedocs.org-master/.??* . && \
-rmdir /tmp/readthedocs.org-master
+yes | cp -i -a /tmp/readthedocs.org-master/* . 
 
 cp -f /etc/default/rtd-config.py $APPDIR/readthedocs/config.py
 pip install -U -r $APPDIR/requirements.txt
