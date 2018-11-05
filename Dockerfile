@@ -2,7 +2,7 @@ FROM python:2.7-stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV APPDIR /app
-ENV DJANGO_SETTINGS_MODULE config
+ENV DJANGO_SETTINGS_MODULE readthedocs.settings.local
 ENV LANG en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV VIRTUAL_ENV /venv
@@ -33,9 +33,7 @@ RUN mkdir -p $APPDIR && cd /tmp && \
 
 RUN pip install --upgrade pip
 
-ENV SECRET_KEY "readthedocs_secr3t"
-
-COPY ./files/local_settings.py $APPDIR/readthedocs/settings/local_settings.py
+COPY ./files/local_settings.py $APPDIR/readthedocs/settings/local.py
     
 ADD config /
 

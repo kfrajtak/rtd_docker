@@ -14,7 +14,7 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Enable private Git doc repositories
 ALLOW_PRIVATE_REPOS = True
 
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.environ['SECRET_KEY'] or "the_secret_key_12345"
 
 DATABASES = {
     'default': {

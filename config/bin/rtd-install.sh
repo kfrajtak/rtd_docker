@@ -7,6 +7,8 @@ unzip /tmp/master.zip -d /tmp >/dev/null 2>/dev/null
 yes | cp -i -a /tmp/readthedocs.org-master/* . 
 
 cp -f /etc/default/rtd-config.py $APPDIR/readthedocs/config.py
+cp -f /etc/default/rtd-config.py $APPDIR/readthedocs/settings/local.py
+
 pip install -U -r $APPDIR/requirements.txt
 cd $APPDIR && /venv/bin/python setup.py develop
 cd $APPDIR/readthedocs
